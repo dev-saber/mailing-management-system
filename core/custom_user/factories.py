@@ -1,6 +1,6 @@
 import factory
 from faker import Faker
-from .models import Client, User
+from .models import User
 from office.factories import OfficeFactory
 
 fake = Faker()
