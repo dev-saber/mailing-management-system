@@ -1,16 +1,13 @@
+from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.tokens import OutstandingToken, BlacklistedToken
-from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
-from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.exceptions import TokenError
+from core.throttling import CustomAnonRateThrottle
 from custom_user.permissions import *
 from .models import User, Client, STAFF_ROLES, STAFF_STATUS
 from .serializers import *
 from office.models import Office
-from office.serializers import OfficeSerializer
-from core.throttling import CustomAnonRateThrottle
-from django.contrib.auth import authenticate
 
 # a helper function to check if a cin value exists in the database, excluding the client with the given ID
 def cin_exists(cin, exclude=None):
@@ -26,11 +23,6 @@ class Register(APIView):
         try:
             office = Office.objects.get(id=request.data["office"])
             if office is not None:
-                # not working
-                # record = {
-                #     **request.data,
-                #     "office": office.id,
-                # }
 
                 record = {
                     "cin": request.data["cin"],
