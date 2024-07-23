@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from product.factories import ProductFactory
 from send_request.factories import SMSFactory
 from send_request.models import SMS
@@ -5,7 +6,6 @@ from custom_user.factories import UserFactory
 from office.factories import OfficeFactory
 from weight_range.models import Weight_range
 from product.models import Product
-from office.models import Office
 
 # package product record (colis)
 ProductFactory.create(
@@ -27,18 +27,6 @@ ProductFactory.create(
 if not SMS.objects.exists(): # the record must not exist
     SMSFactory.create()
 
-# admin user (just for testing)
-UserFactory.create(
-    email = 'admin@mail.com',
-    password = 'admin',
-    first_name = 'Admin',
-    last_name = 'Admin',
-    cin = '12345678',
-    role = 'admin',
-    status = 'actif',
-    office = OfficeFactory(name='Admin Office', address='Admin Address', city='Admin City')
-)
-
 # weight ranges (for testing)
 range_price = 10
 range_length = 500  # each range is 500g
@@ -54,15 +42,13 @@ for _ in range(0, 10000, range_length):
     range_price += 10
 
 # admin user (just for testing)
-admin = UserFactory.build(
+admin = UserFactory.create(
     email = "admintest@mail.com",
-    password = None,
+    password = make_password("testtest"),
     first_name="Admin",
     last_name="Admin",
     cin="99999999",
     role="admin",
     status="actif",
-    office = Office.objects.get(id=2)
+    office = OfficeFactory(name='Admin Office', address='Admin Address', city='Admin City')
 )
-admin.set_password("testtest")  # Hash the password
-admin.save()

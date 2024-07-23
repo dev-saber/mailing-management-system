@@ -1,10 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from custom_user.permissions import *
-from .models import Weight_range, RANGE_STATUS
+from .models import Weight_range
 from .serializers import WeightRangeSerializer
 from product.models import Product
-from product.serializers import ProductSerializer
 
 # helper function to check if a weight range is overlapping with an existing range
 def range_status(min, max, product, current_range_id=None):
