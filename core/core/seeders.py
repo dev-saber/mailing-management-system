@@ -41,6 +41,17 @@ for _ in range(0, 10000, range_length):
     min_weight += range_length
     range_price += 10
 
+
+for _ in range(0, 5000, range_length):
+    Weight_range.objects.create(
+        min_weight=min_weight +1,
+        max_weight=min_weight + range_length,
+        price=range_price,
+        product_id=Product.objects.get(code='CR').id
+    )
+    min_weight += range_length
+    range_price += 10
+
 # admin user (just for testing)
 admin = UserFactory.create(
     email = "admintest@mail.com",
