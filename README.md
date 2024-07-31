@@ -65,6 +65,16 @@
         }
     ```
 
+- get authenticated user information
+    ```bash
+        GET
+        http://127.0.0.1:8000/api/user/
+
+        headers: {
+            "access": `Bearer ${accessToken}`
+        }
+    ```
+
 - get all staff list
     ```bash
         GET
